@@ -1,42 +1,31 @@
-const tarefas = []
+const database = require('../config/database');  
 
-class Tarefa {
-    constructor(id,titulo, status, idprojeto, idusuario) {
-        this.id = id;
-        this.titulo = titulo;
-        this.status = status | false;
-        this.idprojeto = idprojeto;
-        this.idusuario = idusuario;
-    }
-
-    save() {
-        tarefas.push(this);
-    }
-
-    static fetchAll() {
-        return tarefas;
-    }
-
-    static update(id, titulo, status, idprojeto, idusuario) {  
-        const tarefa = tarefas.find(p => p.id === id);  
-        if (tarefa) {  
-            tarefa.titulo = titulo;
-            tarefa.status = status;
-            tarefa.idprojeto = idprojeto;
-            tarefa.idusuario = idusuario;
-            return tarefa;  
-        }  
-        return null;  
+class Tarefa {  
+    constructor() {  
+        this.model = database.define('tarefa', {  
+            id: {  
+                type: database.Sequelize.INTEGER,  
+                primaryKey: true,  
+                autoIncrement: true  
+            },  
+            titulo: {   
+                type: database.Sequelize.STRING,  
+                allowNull: false  
+            },  
+            status: {  
+                type: database.Sequelize.STRING,  
+                allowNull: false  
+            },  
+            id_projeto: {  
+                type: database.Sequelize.INTEGER,  
+                allowNull: false  
+            },  
+            id_usuario: {  
+                type: database.Sequelize.INTEGER,  
+                allowNull: false  
+            }  
+        });  
     }  
+}  
 
-    static delete(id) {  
-        const index = tarefas.findIndex(p => p.id === id);  
-        if (index !== -1) {  
-            tarefas.splice(index, 1);  
-            return true;  
-        }  
-        return false;  
-    }  
-}
-
-module.exports = Tarefa;
+module.exports = (new Tarefa).model;  

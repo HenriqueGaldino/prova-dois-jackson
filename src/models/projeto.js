@@ -1,39 +1,25 @@
-const projetos = []
+const database = require('../config/database');  
 
-class Projeto {
-    constructor(id,nome, descricao) {
-        this.id = id;
-        this.nome = nome;
-        this.descricao = descricao;
-        
-    }
-
-    save() {
-        projetos.push(this);
-    }
-
-    static fetchAll() {
-        return projetos;
-    }
-    
-    static update(id, nome, descricao) {  
-        const projeto = projetos.find(p => p.id === id);  
-        if (projeto) {  
-            projeto.nome = nome;
-            projeto.descricao = descricao;
-            return projeto;  
-        }  
-        return null;  
+class Projeto {  
+    constructor() {  
+        this.model = database.define('projeto', {  
+            id: {  
+                type: database.Sequelize.INTEGER,  
+                primaryKey: true,  
+                autoIncrement: true  
+            },  
+            name: {  
+                type: database.Sequelize.STRING,  
+                allowNull: false,  
+                validate: {  
+                    notEmpty: true // Ensure name is not empty  
+                }  
+            },  
+            description: { 
+                type: database.Sequelize.STRING  
+            }  
+        });  
     }  
+}  
 
-    static delete(id) {  
-        const index = projetos.findIndex(p => p.id === id);  
-        if (index !== -1) {  
-            projetos.splice(index, 1);  
-            return true;  
-        }  
-        return false;  
-    }  
-}
-
-module.exports = Projeto;
+module.exports = (new Projeto).model;
