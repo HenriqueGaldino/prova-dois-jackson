@@ -1,6 +1,6 @@
 const Usuario = require('../models/usuario');  
 const bcrypt = require('bcrypt');  
-const jwt = require('jsonwebtoken');  
+const jwt = require('jsonwebtoken');
 require('dotenv').config();  
 
 const saltRounds = 10;  
