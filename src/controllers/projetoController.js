@@ -17,7 +17,7 @@ class ProjetoController {
             const projeto = await Projeto.create({ name, description });  
             return res.status(201).json(projeto);  
         } catch (error) {  
-            console.error(error); // Log the error for debugging
+            console.error(error); 
             return res.status(500).json({ error: error.message }); 
         }  
     }  
@@ -35,7 +35,7 @@ class ProjetoController {
             if (!projeto) {  
                 return res.status(404).json({ error: 'Projeto não encontrado' });  
             }  
-            return res.json(projeto); // Retorna o projeto encontrado  
+            return res.json(projeto);  
         } catch (error) {  
             console.error(error);  
             return res.status(500).json({ error: error.message });  
@@ -58,7 +58,7 @@ class ProjetoController {
             projeto.name = name;  
             projeto.description = description;  
             await projeto.save();   
-            return res.json(projeto); // Retorna o projeto atualizado  
+            return res.json(projeto); 
         } catch (error) {  
             console.error(error);  
             return res.status(500).json({ error: error.message });  
